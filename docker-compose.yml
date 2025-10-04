@@ -1,0 +1,22 @@
+services:
+  db:
+    container_name: todolist-backend-postgres
+    image: postgres
+    environment:
+      POSTGRES_USER: tommyzhou
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: todolist
+    ports:
+      - "5334:5432"
+    restart: unless-stopped
+    volumes:
+      - db:/data/postgres
+    networks:
+      - todolist
+
+networks:
+  todolist:
+    driver: bridge
+
+volumes:
+  db:
