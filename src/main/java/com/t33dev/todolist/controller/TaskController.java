@@ -8,6 +8,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/tasks")
+@CrossOrigin
 public class TaskController {
     private final TaskService taskService;
 
@@ -26,8 +27,20 @@ public class TaskController {
         return taskService.getAllTasks();
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/update/{id}")
     public void updateAccount(@PathVariable Long id, @RequestBody Task task) {
         taskService.updateTask(id, task);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void deleteTask(@PathVariable Long id) {
+        taskService.deleteTask(id);
+    }
+
+    @DeleteMapping("/deleteAll")
+    public void deleteAllTasks() {
+        for (Task task : taskService.getAllTasks()) {
+            taskService.deleteTask(task.getId());
+        }
     }
 }
